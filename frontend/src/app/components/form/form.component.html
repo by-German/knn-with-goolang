@@ -1,0 +1,52 @@
+<div class="container">
+  <h1>Formulario de datos:</h1>
+
+  <form [formGroup]="form" (ngSubmit)="showData()" class="form">
+
+    <mat-form-field class="form-full-width">
+      <mat-label>Departamento</mat-label>
+      <input matInput type="text" class="form-control" formControlName="departamento">
+    </mat-form-field>
+
+    <mat-form-field class="form-full-width">
+      <mat-label>Parentesco</mat-label>
+      <input matInput type="number" class="form-control" formControlName="parentesco">
+    </mat-form-field>
+
+    <mat-form-field class="form-full-width">
+      <mat-label>Miembro del hogar</mat-label>
+      <input matInput type="number" class="form-control" formControlName="miembroHogar">
+    </mat-form-field>
+
+    <mat-form-field class="form-full-width">
+      <mat-label>Edad</mat-label>
+      <input matInput type="number" class="form-control" formControlName="edad">
+    </mat-form-field>
+
+    <mat-form-field class="form-full-width">
+      <mat-label>Mivel de estudios</mat-label>
+      <input matInput type="number" class="form-control" formControlName="nivel">
+    </mat-form-field>
+
+    <br>
+    <mat-form-field class="form-full-width">
+      <mat-label>Valor de K</mat-label>
+      <input matInput type="number" class="form-control" formControlName="k">
+    </mat-form-field>
+
+    <br>
+    <button mat-stroked-button color="primary">ENVIAR</button>
+
+  </form>
+</div>
+
+<div *ngIf="existResult()" class="result" [style.backgroundColor]="data.Discapacidad == 0 ? '#daefda' : '#eeacba'">
+  <div class="content">
+    <div *ngIf=" data.Discapacidad == 0">
+      <p>No Tiene discapacidad: </p>
+    </div>
+    <div *ngIf=" data.Discapacidad == 1">
+      <p>Tiene discapacidad: </p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,16 @@
+table {
+  width: 80%;
+}
+th {
+  font-weight: bold;
+  font-size: 14px;
+  color: #624baa;
+}
+
+#screen {
+  margin-top: 50px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
