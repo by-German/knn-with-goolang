@@ -5,6 +5,6 @@
 
 2. Dirigirse a la carpeta frontend, dentro de ella, ejecutar el comando 
 > npm install
-> ng serve
+ng serve
 
 Esto lanzará el cliente en la ruta: http://localhost:4200/
