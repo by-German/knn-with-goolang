@@ -39,6 +39,8 @@ type Data struct {
 	MiembroHogar  float64
 	Edad          float64
 	NivelEstudios float64
+	sexo          float64
+	EstadoCivil   float64
 	Discapacidad  int
 }
 
@@ -65,6 +67,8 @@ func LoadData() []Data {
 		temp.Parentesco, _ = strconv.ParseFloat(record[7], 64)
 		temp.MiembroHogar, _ = strconv.ParseFloat(record[8], 64)
 		temp.Edad, _ = strconv.ParseFloat(record[10], 64)
+		temp.sexo, _ = strconv.ParseFloat(record[9], 64)
+		temp.EstadoCivil, _ = strconv.ParseFloat(record[13], 64)
 		temp.Discapacidad, _ = strconv.Atoi(record[17])
 		if record[14] == "" {
 			temp.NivelEstudios = 9
@@ -82,7 +86,7 @@ func EuclideanDistance(i, n int, x []Data, y Data, ch chan []float64) {
 	distancia := make([]float64, n-i)
 
 	for v := i; v < n; v++ {
-		distancia[count] += math.Sqrt(math.Pow(x[v].NivelEstudios-y.NivelEstudios, 2) + math.Pow(x[v].Edad-y.Edad, 2))
+		distancia[count] += math.Sqrt(math.Pow(x[v].NivelEstudios-y.NivelEstudios, 2) + math.Pow(x[v].Edad-y.Edad, 2) + math.Pow(x[v].sexo-y.sexo, 2) + math.Pow(x[v].EstadoCivil-y.EstadoCivil, 2))
 		count++
 	}
 
