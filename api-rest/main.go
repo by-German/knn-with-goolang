@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"encoding/csv"
 	"encoding/json"
 	"fmt"
@@ -8,6 +9,7 @@ import (
 	"io/ioutil"
 	"math"
 	"math/rand"
+	"net"
 	"net/http"
 	"sort"
 	"strconv"
@@ -93,7 +95,58 @@ func EuclideanDistance(i, n int, x []Data, y Data, ch chan []float64) {
 	distancia := make([]float64, n-i)
 
 	for v := i; v < n; v++ {
-		distancia[count] += math.Sqrt(math.Pow(x[v].NivelEstudios-y.NivelEstudios, 2) + math.Pow(x[v].Edad-y.Edad, 2) + math.Pow(x[v].Sexo-y.Sexo, 2) + math.Pow(x[v].EstadoCivil-y.EstadoCivil, 2))
+
+		dato1 := x[v].NivelEstudios
+		dato2 := y.NivelEstudios
+		dato3 := x[v].Edad
+		dato4 := y.Edad
+		dato5 := x[v].Sexo
+		dato6 := y.Sexo
+		dato7 := x[v].EstadoCivil
+		dato8 := y.EstadoCivil
+
+		//DISTRIBUCION A NODOS
+		//NODO1------------------------
+		conn1, _ := net.Dial("tcp", "localhost:8001")
+		defer conn1.Close()
+		fmt.Fprintln(conn1, dato1)
+		fmt.Fprintln(conn1, dato2)
+		r1 := bufio.NewReader(conn1)
+		resp1, _ := r1.ReadString('\n')
+		//NODO2------------------------
+		conn2, _ := net.Dial("tcp", "localhost:8002")
+		defer conn2.Close()
+		fmt.Fprintln(conn2, dato3)
+		fmt.Fprintln(conn2, dato4)
+		r2 := bufio.NewReader(conn2)
+		resp2, _ := r2.ReadString('\n')
+		//NODO3------------------------
+		conn3, _ := net.Dial("tcp", "localhost:8003")
+		defer conn3.Close()
+		fmt.Fprintln(conn3, dato5)
+		fmt.Fprintln(conn3, dato6)
+		r3 := bufio.NewReader(conn3)
+		resp3, _ := r3.ReadString('\n')
+		//NODO4------------------------
+		conn4, _ := net.Dial("tcp", "localhost:8004")
+		defer conn4.Close()
+		fmt.Fprintln(conn4, dato7)
+		fmt.Fprintln(conn4, dato8)
+		r4 := bufio.NewReader(conn4)
+		resp4, _ := r4.ReadString('\n')
+		/*
+			nodo1 := math.Pow(x[v].NivelEstudios-y.NivelEstudios, 2)
+			nodo2 := math.Pow(x[v].Edad-y.Edad, 2)
+			nodo3 := math.Pow(x[v].Sexo-y.Sexo, 2)
+			nodo4 := math.Pow(x[v].EstadoCivil-y.EstadoCivil, 2)
+		*/
+
+		nodo1, _ := strconv.ParseFloat(resp1, 64)
+		nodo2, _ := strconv.ParseFloat(resp2, 64)
+		nodo3, _ := strconv.ParseFloat(resp3, 64)
+		nodo4, _ := strconv.ParseFloat(resp4, 64)
+
+		distancia[count] += math.Sqrt(nodo1 + nodo2 + nodo3 + nodo4)
 		count++
 	}
 	ch <- distancia
