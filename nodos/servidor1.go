@@ -11,12 +11,11 @@ import (
 )
 
 func main() {
-
 	//http.ListenAndServe(":8081", nil)
 
 	//rol de servidor
 	//escucha
-	ln, error := net.Listen("tcp", "localhost:8081") //IP:PUERTO
+	ln, error := net.Listen("tcp", ":8081") //IP:PUERTO
 	if error != nil {
 		log.Println("Falla al resolver la direccion", error.Error())
 		os.Exit(1)
@@ -26,11 +25,9 @@ func main() {
 	if error != nil {
 		log.Println("Fallo al aceptar la conexion con el cliente", error.Error())
 	}
-	defer conn.Close()
 	//recuperar lo que envia el cliente
 	r1 := bufio.NewReader(conn)
 	r2 := bufio.NewReader(conn)
-
 	msg1, _ := r1.ReadString('\n') //lee haste el salto de linea finaliza el mensaje para guardar el dato que llega
 	msg2, _ := r2.ReadString('\n')
 	var1, _ := strconv.ParseFloat(msg1, 64)
@@ -39,6 +36,7 @@ func main() {
 
 	//responde al cliente
 	respuesta := math.Pow(var1-var2, 2)
-	fmt.Fprintln(conn, respuesta)
+	s := fmt.Sprintf("%f", respuesta)
+	fmt.Fprintln(conn, s)
 
 }

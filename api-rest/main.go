@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bufio"
 	"encoding/csv"
 	"encoding/json"
 	"fmt"
@@ -9,7 +8,6 @@ import (
 	"io/ioutil"
 	"math"
 	"math/rand"
-	"net"
 	"net/http"
 	"sort"
 	"strconv"
@@ -90,70 +88,84 @@ func LoadData() []Data {
 	return data
 }
 
+// func nod1(dato1 float64, dato2 float64) string {
+// 	conn1, _ := net.Dial("tcp", ":8081")
+// 	defer conn1.Close()
+// 	fmt.Fprintln(conn1, dato1)
+// 	fmt.Fprintln(conn1, dato2)
+// 	r1 := bufio.NewReader(conn1)
+// 	resp1, _ := r1.ReadString('\n')
+// 	return resp1
+// }
+
+// func nod2(dato1 float64, dato2 float64) string {
+// 	conn2, _ := net.Dial("tcp", ":8082")
+// 	defer conn2.Close()
+// 	fmt.Fprintln(conn2, dato1)
+// 	fmt.Fprintln(conn2, dato2)
+// 	r2 := bufio.NewReader(conn2)
+// 	res2, _ := r2.ReadString('\n')
+
+// 	return res2
+// }
+// func nod3(dato1 float64, dato2 float64) string {
+// 	conn3, _ := net.Dial("tcp", ":8083")
+// 	defer conn3.Close()
+// 	fmt.Fprintln(conn3, dato1)
+// 	fmt.Fprintln(conn3, dato2)
+// 	r3 := bufio.NewReader(conn3)
+// 	resp3, _ := r3.ReadString('\n')
+
+// 	return resp3
+// }
+// func nod4(dato1 float64, dato2 float64) string {
+// 	conn4, _ := net.Dial("tcp", ":8084")
+// 	defer conn4.Close()
+// 	fmt.Fprintln(conn4, dato1)
+// 	fmt.Fprintln(conn4, dato2)
+// 	r4 := bufio.NewReader(conn4)
+// 	resp4, _ := r4.ReadString('\n')
+
+// 	return resp4
+// }
+
 func EuclideanDistance(i, n int, x []Data, y Data, ch chan []float64) {
 	count := 0
 	distancia := make([]float64, n-i)
-	fmt.Println("llego aqui")
 	for v := i; v < n; v++ {
 
-		dato1 := x[v].NivelEstudios
-		dato2 := y.NivelEstudios
-		dato3 := x[v].Edad
-		dato4 := y.Edad
-		dato5 := x[v].Sexo
-		dato6 := y.Sexo
-		dato7 := x[v].EstadoCivil
-		dato8 := y.EstadoCivil
-		fmt.Println("entro bucle", i)
+		// dato1 := x[v].NivelEstudios
+		// dato2 := y.NivelEstudios
+		// dato3 := x[v].Edad
+		// dato4 := y.Edad
+		// dato5 := x[v].Sexo
+		// dato6 := y.Sexo
+		// dato7 := x[v].EstadoCivil
+		// dato8 := y.EstadoCivil
 
-		//DISTRIBUCION A NODOS
-		//NODO1------------------------
-		conn1, _ := net.Dial("tcp", "localhost:8081")
-		//defer conn1.Close()
-		fmt.Fprintln(conn1, dato1)
-		fmt.Fprintln(conn1, dato2)
-		r1 := bufio.NewReader(conn1)
-		resp1, _ := r1.ReadString('\n')
-		fmt.Println("entro bucleeeeeeeeeee", i)
+		// //DISTRIBUCION A NODOS
+		// //NODO1------------------------
 
-		//NODO2------------------------
-		conn2, _ := net.Dial("tcp", "localhost:8082")
-		//defer conn2.Close()
-		fmt.Fprintln(conn2, dato3)
-		fmt.Fprintln(conn2, dato4)
-		r2 := bufio.NewReader(conn2)
-		resp2, _ := r2.ReadString('\n')
+		// nodo1, _ := strconv.ParseFloat(nod1(dato1, dato2), 64)
 
-		//NODO3------------------------
-		conn3, _ := net.Dial("tcp", "localhost:8083")
-		//defer conn3.Close()
-		fmt.Fprintln(conn3, dato5)
-		fmt.Fprintln(conn3, dato6)
-		r3 := bufio.NewReader(conn3)
-		resp3, _ := r3.ReadString('\n')
+		// //NODO2------------------------
 
-		//NODO4------------------------
-		conn4, _ := net.Dial("tcp", "localhost:8084")
-		//defer conn4.Close()
-		fmt.Fprintln(conn4, dato7)
-		fmt.Fprintln(conn4, dato8)
-		r4 := bufio.NewReader(conn4)
-		resp4, _ := r4.ReadString('\n')
+		// nodo2, _ := strconv.ParseFloat(nod2(dato3, dato4), 64)
 
-		/*
-			nodo1 := math.Pow(x[v].NivelEstudios-y.NivelEstudios, 2)
-			nodo2 := math.Pow(x[v].Edad-y.Edad, 2)
-			nodo3 := math.Pow(x[v].Sexo-y.Sexo, 2)
-			nodo4 := math.Pow(x[v].EstadoCivil-y.EstadoCivil, 2)
-		*/
+		// //NODO3------------------------
 
-		nodo1, _ := strconv.ParseFloat(resp1, 64)
-		nodo2, _ := strconv.ParseFloat(resp2, 64)
-		nodo3, _ := strconv.ParseFloat(resp3, 64)
-		nodo4, _ := strconv.ParseFloat(resp4, 64)
-		fmt.Println("entro buclecitooooooo", i)
+		// nodo3, _ := strconv.ParseFloat(nod3(dato5, dato6), 64)
+
+		// //NODO4------------------------
+
+		// nodo4, _ := strconv.ParseFloat(nod4(dato7, dato8), 64)
+
+		nodo1 := math.Pow(x[v].NivelEstudios-y.NivelEstudios, 2)
+		nodo2 := math.Pow(x[v].Edad-y.Edad, 2)
+		nodo3 := math.Pow(x[v].Sexo-y.Sexo, 2)
+		nodo4 := math.Pow(x[v].EstadoCivil-y.EstadoCivil, 2)
+
 		distancia[count] += math.Sqrt(nodo1 + nodo2 + nodo3 + nodo4)
-		fmt.Println(distancia[count])
 		count++
 	}
 	ch <- distancia
@@ -246,7 +258,7 @@ func Knn(res http.ResponseWriter, req *http.Request) {
 	// if err != nil {
 	// 	k = 3
 	// }
-	k := 3
+	k := 1
 	nProceso := 4
 	body, err := ioutil.ReadAll(req.Body)
 	if err != nil {
@@ -260,7 +272,7 @@ func Knn(res http.ResponseWriter, req *http.Request) {
 	y := myData
 	x := LoadData()
 
-	for i := 0; i < 3; i++ {
+	for i := 0; i < 1; i++ {
 		dto := traindata(x, i, nProceso)
 		x = append(x, dto)
 		x = RemoveIndex(x, rand.Intn((len(x) - 1)))
@@ -289,7 +301,7 @@ func GetAll(res http.ResponseWriter, req *http.Request) {
 func router() {
 	http.HandleFunc("/list", GetAll)
 	http.HandleFunc("/knn", Knn)
-	http.ListenAndServe(":8081", nil)
+	http.ListenAndServe(":8080", nil)
 }
 
 func main() {

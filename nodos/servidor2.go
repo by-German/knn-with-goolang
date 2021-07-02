@@ -16,7 +16,7 @@ func main() {
 
 	//rol de servidor
 	//escucha
-	ln, error := net.Listen("tcp", "localhost:8082") //IP:PUERTO
+	ln, error := net.Listen("tcp", ":8082") //IP:PUERTO
 	if error != nil {
 		log.Println("Falla al resolver la direccion", error.Error())
 		os.Exit(1)
@@ -40,6 +40,7 @@ func main() {
 
 	//responde al cliente
 	respuesta := math.Pow(var1-var2, 2)
-	fmt.Fprintln(conn, respuesta)
+	s := fmt.Sprintf("%f", respuesta) // s == "123.456000"
+	fmt.Fprintln(conn, s)
 
 }

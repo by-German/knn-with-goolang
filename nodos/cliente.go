@@ -13,7 +13,7 @@ func main() {
 
 	if menu == 1 {
 		//envio, Dial para comunicarse
-		conn1, _ := net.Dial("tcp", "localhost:8001")
+		conn1, _ := net.Dial("tcp", ":8001")
 		defer conn1.Close()
 		//enviamos el mensaje al servidor
 		//fmt.Fprintln(conn1, "cliente 1 enviando datos al server 1!")
