@@ -109,32 +109,37 @@ func EuclideanDistance(i, n int, x []Data, y Data, ch chan []float64) {
 		//DISTRIBUCION A NODOS
 		//NODO1------------------------
 		conn1, _ := net.Dial("tcp", "localhost:8081")
-		defer conn1.Close()
+		//defer conn1.Close()
 		fmt.Fprintln(conn1, dato1)
 		fmt.Fprintln(conn1, dato2)
 		r1 := bufio.NewReader(conn1)
 		resp1, _ := r1.ReadString('\n')
+		fmt.Println("entro bucleeeeeeeeeee", i)
+
 		//NODO2------------------------
 		conn2, _ := net.Dial("tcp", "localhost:8082")
-		defer conn2.Close()
+		//defer conn2.Close()
 		fmt.Fprintln(conn2, dato3)
 		fmt.Fprintln(conn2, dato4)
 		r2 := bufio.NewReader(conn2)
 		resp2, _ := r2.ReadString('\n')
+
 		//NODO3------------------------
 		conn3, _ := net.Dial("tcp", "localhost:8083")
-		defer conn3.Close()
+		//defer conn3.Close()
 		fmt.Fprintln(conn3, dato5)
 		fmt.Fprintln(conn3, dato6)
 		r3 := bufio.NewReader(conn3)
 		resp3, _ := r3.ReadString('\n')
+
 		//NODO4------------------------
 		conn4, _ := net.Dial("tcp", "localhost:8084")
-		defer conn4.Close()
+		//defer conn4.Close()
 		fmt.Fprintln(conn4, dato7)
 		fmt.Fprintln(conn4, dato8)
 		r4 := bufio.NewReader(conn4)
 		resp4, _ := r4.ReadString('\n')
+
 		/*
 			nodo1 := math.Pow(x[v].NivelEstudios-y.NivelEstudios, 2)
 			nodo2 := math.Pow(x[v].Edad-y.Edad, 2)
@@ -146,7 +151,7 @@ func EuclideanDistance(i, n int, x []Data, y Data, ch chan []float64) {
 		nodo2, _ := strconv.ParseFloat(resp2, 64)
 		nodo3, _ := strconv.ParseFloat(resp3, 64)
 		nodo4, _ := strconv.ParseFloat(resp4, 64)
-
+		fmt.Println("entro buclecitooooooo", i)
 		distancia[count] += math.Sqrt(nodo1 + nodo2 + nodo3 + nodo4)
 		fmt.Println(distancia[count])
 		count++
@@ -284,7 +289,7 @@ func GetAll(res http.ResponseWriter, req *http.Request) {
 func router() {
 	http.HandleFunc("/list", GetAll)
 	http.HandleFunc("/knn", Knn)
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(":8081", nil)
 }
 
 func main() {
