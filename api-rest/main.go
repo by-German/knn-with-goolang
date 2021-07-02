@@ -70,13 +70,18 @@ func LoadData() []Data {
 		temp.MiembroHogar, _ = strconv.ParseFloat(record[8], 64)
 		temp.Edad, _ = strconv.ParseFloat(record[10], 64)
 		temp.Sexo, _ = strconv.ParseFloat(record[9], 64)
-		temp.EstadoCivil, _ = strconv.ParseFloat(record[13], 64)
 		temp.Discapacidad, _ = strconv.Atoi(record[17])
 		if record[14] == "" {
 			temp.NivelEstudios = 9
 			data = append(data, temp)
 			continue
 		}
+		if record[13] == "" {
+			temp.EstadoCivil = 1
+			data = append(data, temp)
+			continue
+		}
+		temp.EstadoCivil, _ = strconv.ParseFloat(record[13], 64)
 		temp.NivelEstudios, _ = strconv.ParseFloat(record[14], 64)
 		data = append(data, temp)
 	}
