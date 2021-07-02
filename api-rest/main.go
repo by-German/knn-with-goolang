@@ -94,7 +94,7 @@ func EuclideanDistance(i, n int, x []Data, y Data, ch chan []float64) {
 	ch <- distancia
 }
 
-func traindata(x []Data, k int) Data {
+func traindata(x []Data, k int, nProcesos int) Data {
 	var y Data
 	rand.Seed(time.Now().UnixNano())
 
@@ -105,8 +105,6 @@ func traindata(x []Data, k int) Data {
 	y.MiembroHogar = float64(rand.Intn(2 - 0))
 	y.NivelEstudios = float64(rand.Intn(9 - 0))
 	y.Parentesco = float64(rand.Intn(10 - 0))
-
-	nProcesos := 4
 
 	channels := make([]chan []float64, nProcesos)
 	aumento := len(x) / nProcesos
@@ -140,9 +138,8 @@ func traindata(x []Data, k int) Data {
 	return y
 }
 
-func findknn(x []Data, k int, y Data) Data {
+func findknn(x []Data, k int, y Data, nProcesos int) Data {
 
-	nProcesos := 1
 	// secction of algorithm
 	channels := make([]chan []float64, nProcesos)
 	aumento := len(x) / nProcesos
@@ -184,7 +181,7 @@ func Knn(res http.ResponseWriter, req *http.Request) {
 	// if err != nil {
 	// 	k = 3
 	// }
-
+	nProceso := 4
 	body, err := ioutil.ReadAll(req.Body)
 	if err != nil {
 		fmt.Println("error al leer el body")
@@ -198,13 +195,13 @@ func Knn(res http.ResponseWriter, req *http.Request) {
 	x := LoadData()
 
 	for i := 0; i < k; i++ {
-		dto := traindata(x, k)
+		dto := traindata(x, k, nProceso)
 		x = append(x, dto)
 		x = RemoveIndex(x, rand.Intn((len(x) - 1)))
 		fmt.Println(i, dto)
 	}
 
-	y = findknn(x, k, y)
+	y = findknn(x, k, y, nProceso)
 	// end secction
 	json, _ := json.Marshal(y)
 	fmt.Println("//////////////////////")
