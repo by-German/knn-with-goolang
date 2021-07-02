@@ -32,6 +32,16 @@
       <td mat-cell *matCellDef="let element"> {{element.Discapacidad}} </td>
     </ng-container>
 
+    <ng-container matColumnDef="Sexo">
+      <th mat-header-cell *matHeaderCellDef> Sexo </th>
+      <td mat-cell *matCellDef="let element"> {{element.Sexo}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="EstadoCivil">
+      <th mat-header-cell *matHeaderCellDef> Estado Civil</th>
+      <td mat-cell *matCellDef="let element"> {{element.EstadoCivil}} </td>
+    </ng-container>
+
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
