@@ -6,12 +6,6 @@ import (
 	"net"
 )
 
-type Alumno struct {
-	Codigo string `json:cod`
-	Nombre string `json:nom`
-	Dni    int    `json:dni`
-}
-
 func main() {
 	var menu int
 	fmt.Println("Ingrese un numero entre 1 y 4")
