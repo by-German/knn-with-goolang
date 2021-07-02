@@ -93,7 +93,7 @@ func LoadData() []Data {
 func EuclideanDistance(i, n int, x []Data, y Data, ch chan []float64) {
 	count := 0
 	distancia := make([]float64, n-i)
-
+	fmt.Println("llego aqui")
 	for v := i; v < n; v++ {
 
 		dato1 := x[v].NivelEstudios
@@ -104,31 +104,32 @@ func EuclideanDistance(i, n int, x []Data, y Data, ch chan []float64) {
 		dato6 := y.Sexo
 		dato7 := x[v].EstadoCivil
 		dato8 := y.EstadoCivil
+		fmt.Println("entro bucle", i)
 
 		//DISTRIBUCION A NODOS
 		//NODO1------------------------
-		conn1, _ := net.Dial("tcp", "localhost:8001")
+		conn1, _ := net.Dial("tcp", "localhost:8081")
 		defer conn1.Close()
 		fmt.Fprintln(conn1, dato1)
 		fmt.Fprintln(conn1, dato2)
 		r1 := bufio.NewReader(conn1)
 		resp1, _ := r1.ReadString('\n')
 		//NODO2------------------------
-		conn2, _ := net.Dial("tcp", "localhost:8002")
+		conn2, _ := net.Dial("tcp", "localhost:8082")
 		defer conn2.Close()
 		fmt.Fprintln(conn2, dato3)
 		fmt.Fprintln(conn2, dato4)
 		r2 := bufio.NewReader(conn2)
 		resp2, _ := r2.ReadString('\n')
 		//NODO3------------------------
-		conn3, _ := net.Dial("tcp", "localhost:8003")
+		conn3, _ := net.Dial("tcp", "localhost:8083")
 		defer conn3.Close()
 		fmt.Fprintln(conn3, dato5)
 		fmt.Fprintln(conn3, dato6)
 		r3 := bufio.NewReader(conn3)
 		resp3, _ := r3.ReadString('\n')
 		//NODO4------------------------
-		conn4, _ := net.Dial("tcp", "localhost:8004")
+		conn4, _ := net.Dial("tcp", "localhost:8084")
 		defer conn4.Close()
 		fmt.Fprintln(conn4, dato7)
 		fmt.Fprintln(conn4, dato8)
@@ -147,6 +148,7 @@ func EuclideanDistance(i, n int, x []Data, y Data, ch chan []float64) {
 		nodo4, _ := strconv.ParseFloat(resp4, 64)
 
 		distancia[count] += math.Sqrt(nodo1 + nodo2 + nodo3 + nodo4)
+		fmt.Println(distancia[count])
 		count++
 	}
 	ch <- distancia
@@ -235,10 +237,11 @@ func Knn(res http.ResponseWriter, req *http.Request) {
 	res.Header().Set("Access-Control-Allow-Origin", "*")
 	res.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
 
-	k, err := strconv.Atoi(req.FormValue("k"))
-	if err != nil {
-		k = 3
-	}
+	// k, err := strconv.Atoi(req.FormValue("k"))
+	// if err != nil {
+	// 	k = 3
+	// }
+	k := 3
 	nProceso := 4
 	body, err := ioutil.ReadAll(req.Body)
 	if err != nil {
@@ -252,7 +255,7 @@ func Knn(res http.ResponseWriter, req *http.Request) {
 	y := myData
 	x := LoadData()
 
-	for i := 0; i < 40; i++ {
+	for i := 0; i < 3; i++ {
 		dto := traindata(x, i, nProceso)
 		x = append(x, dto)
 		x = RemoveIndex(x, rand.Intn((len(x) - 1)))

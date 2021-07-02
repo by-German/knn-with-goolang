@@ -6,15 +6,18 @@ import (
 	"log"
 	"math"
 	"net"
+	"net/http"
 	"os"
 	"strconv"
 )
 
 func main() {
 
+	http.ListenAndServe(":8082", nil)
+
 	//rol de servidor
 	//escucha
-	ln, error := net.Listen("tcp", "localhost:8002") //IP:PUERTO
+	ln, error := net.Listen("tcp", "localhost:8080") //IP:PUERTO
 	if error != nil {
 		log.Println("Falla al resolver la direccion", error.Error())
 		os.Exit(1)
