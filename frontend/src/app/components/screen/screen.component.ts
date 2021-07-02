@@ -31,5 +31,5 @@ export class ScreenComponent implements OnInit {
     console.log(this.elements)
   }
 
-  displayedColumns: string[] = ['Departamento', 'Parentesco', 'MiembroHogar', 'Edad', "NivelEstudios", "Discapacidad"];
+  displayedColumns: string[] = ['Departamento', 'Parentesco', 'MiembroHogar', 'Edad', "NivelEstudios", "Discapacidad", "Sexo", "EstadoCivil"];
 }
