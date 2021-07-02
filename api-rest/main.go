@@ -106,7 +106,7 @@ func traindata(x []Data, k int, nProcesos int) Data {
 	y.Departamento = "TUMBES"
 	y.Sexo = float64(rand.Intn(2 - 0))
 	y.Edad = float64(rand.Intn(70 - 0))
-	y.EstadoCivil = float64(rand.Intn(3 - 0))
+	y.EstadoCivil = float64(rand.Intn(6 - 0))
 	y.MiembroHogar = float64(rand.Intn(2 - 0))
 	y.NivelEstudios = float64(rand.Intn(9 - 0))
 	y.Parentesco = float64(rand.Intn(10 - 0))
@@ -182,16 +182,16 @@ func Knn(res http.ResponseWriter, req *http.Request) {
 	res.Header().Set("Access-Control-Allow-Origin", "*")
 	res.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
 
-	// k, err := strconv.Atoi(req.FormValue("k"))
-	// if err != nil {
-	// 	k = 3
-	// }
+	k, err := strconv.Atoi(req.FormValue("k"))
+	if err != nil {
+		k = 3
+	}
 	nProceso := 4
 	body, err := ioutil.ReadAll(req.Body)
 	if err != nil {
 		fmt.Println("error al leer el body")
 	}
-	k := 2
+
 	rand.Seed(time.Now().UnixNano())
 
 	var myData Data
@@ -199,8 +199,8 @@ func Knn(res http.ResponseWriter, req *http.Request) {
 	y := myData
 	x := LoadData()
 
-	for i := 0; i < k; i++ {
-		dto := traindata(x, k, nProceso)
+	for i := 0; i < 40; i++ {
+		dto := traindata(x, i, nProceso)
 		x = append(x, dto)
 		x = RemoveIndex(x, rand.Intn((len(x) - 1)))
 		fmt.Println(i, dto)
@@ -209,11 +209,8 @@ func Knn(res http.ResponseWriter, req *http.Request) {
 	y = findknn(x, k, y, nProceso)
 	// end secction
 	json, _ := json.Marshal(y)
-	fmt.Println("//////////////////////")
 	io.WriteString(res, string(json))
-	fmt.Println("//////////////////////")
 	fmt.Println("knn calculated ", y)
-
 }
 
 func GetAll(res http.ResponseWriter, req *http.Request) {
@@ -236,5 +233,4 @@ func router() {
 
 func main() {
 	router()
-
 }
